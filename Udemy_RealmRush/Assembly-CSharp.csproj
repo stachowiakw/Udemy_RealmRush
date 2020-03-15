@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\CubeEditor.cs" />
     <Compile Include="Assets\EnemyMovement.cs" />
+    <Compile Include="Assets\Pathfinder.cs" />
     <Compile Include="Assets\Waypoint2.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>F:/repos/Udemy_RealmRush/Udemy_RealmRush/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
