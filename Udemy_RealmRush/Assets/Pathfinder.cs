@@ -1,14 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Pathfinder : MonoBehaviour
 {
     Dictionary<Vector2Int, Waypoint2> grid = new Dictionary<Vector2Int, Waypoint2>();
+    GameObject myTop;
+    [SerializeField] Waypoint2 StartWaypoint, EndWaypoint;
+    [SerializeField] Color ColorStart, ColorEnd;
 
     void Start()
     {
         LoadBlocks();
+        ColorStartAndEnd();
     }
 
     void LoadBlocks()
@@ -25,9 +30,16 @@ public class Pathfinder : MonoBehaviour
             else
             {
                 grid.Add(GridPos, waypoint);
-            }
+                waypoint.SetTopColor(Color.black);
+            }         
         }
         print("Dictionary ma elementów: " + grid.Count);
+    }
+
+    private void ColorStartAndEnd()
+    {
+        StartWaypoint.SetTopColor(ColorStart);
+        EndWaypoint.SetTopColor(ColorEnd);
     }
 
 }
