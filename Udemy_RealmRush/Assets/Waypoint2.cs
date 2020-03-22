@@ -5,6 +5,8 @@ using UnityEngine;
 public class Waypoint2 : MonoBehaviour
 {
     const int gridSize = 10;
+    public bool isExplored = false;
+    public Waypoint2 foundByWaypoint;
 
     // Start is called before the first frame update
     public int GetGridSize()
