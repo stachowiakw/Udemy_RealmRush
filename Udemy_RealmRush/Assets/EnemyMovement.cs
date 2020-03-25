@@ -11,13 +11,19 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pathfinder = FindObjectOfType<Pathfinder>();
+        pathfinder = GetComponent<Pathfinder>();
+        StartMovement();
+    }
+
+    public void StartMovement()
+    {
+        print("Sciezka gotowa? " + pathfinder.GetPathReady());
         Path = pathfinder.GetPath();
         StartCoroutine(FollowPath());
         print("But I can still do other stuff :)");
     }
 
-   IEnumerator FollowPath()
+    IEnumerator FollowPath()
     {
         print("Starting patrol...");
         foreach (Waypoint2 waypoint in Path)
