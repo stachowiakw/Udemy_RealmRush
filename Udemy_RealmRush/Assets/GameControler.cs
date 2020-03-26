@@ -28,6 +28,7 @@ public class GameControler : MonoBehaviour
     {
         Vector3 SpawnPoint = new Vector3();
         SpawnPoint = StartWaypoint.transform.position;
-        Instantiate(EnemyType1, SpawnPoint, Quaternion.identity);
+        var SpawnedEnemy = Instantiate(EnemyType1, SpawnPoint, Quaternion.identity);
+        enemies.Add(SpawnedEnemy);
     }
 }

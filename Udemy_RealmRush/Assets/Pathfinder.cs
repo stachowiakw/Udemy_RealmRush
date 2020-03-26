@@ -8,6 +8,7 @@ public class Pathfinder : MonoBehaviour
     GameControler gameControler;
     Dictionary<Vector2Int, Waypoint2> grid = new Dictionary<Vector2Int, Waypoint2>();
     Dictionary<Vector2Int, Waypoint2> path = new Dictionary<Vector2Int, Waypoint2>();
+
     GameObject myTop;
     [SerializeField] bool isRunning = true;
     Vector2Int[] directions = { Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left };
@@ -158,6 +159,6 @@ public class Pathfinder : MonoBehaviour
 
     public void StartEnemyMovement()
     {
-        GetComponent<EnemyMovement>().StartMovement();
+        gameObject.GetComponent<EnemyMovement>().StartMovement();
     }
 }

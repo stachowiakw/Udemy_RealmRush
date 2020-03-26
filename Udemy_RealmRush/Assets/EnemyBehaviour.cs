@@ -12,7 +12,6 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()
     {
         gameControler = FindObjectOfType<GameControler>();
-        gameControler.enemies.Add(gameObject);
     }
 
     void OnParticleCollision(GameObject other)

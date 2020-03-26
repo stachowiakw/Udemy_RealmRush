@@ -12,7 +12,7 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         pathfinder = GetComponent<Pathfinder>();
-        StartMovement();
+        //StartMovement();
     }
 
     public void StartMovement()
