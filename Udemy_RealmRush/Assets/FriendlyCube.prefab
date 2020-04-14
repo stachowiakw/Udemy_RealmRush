@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 7250364597348796026}
   - component: {fileID: 570039438}
   - component: {fileID: -4544442426983320236}
+  - component: {fileID: 1360921816745205656}
   m_Layer: 0
   m_Name: 0,0
   m_TagString: Untagged
@@ -246,6 +247,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isExplored: 0
   foundByWaypoint: {fileID: 0}
+--- !u!65 &1360921816745205656
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2992503602169424701}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9, y: 10, z: 9}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5063650725464445760
 GameObject:
   m_ObjectHideFlags: 0

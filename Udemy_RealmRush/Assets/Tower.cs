@@ -7,11 +7,13 @@ using System;
 public class Tower : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] Transform objectToPan;
-    [SerializeField] Transform targetEnemy;
-    [SerializeField] bool targetLocked = false;
-    ParticleSystem cannon;
-    Dictionary<Vector2Int, Waypoint2> gridSurroundingTower = new Dictionary<Vector2Int, Waypoint2>();
+    [SerializeField] private Transform objectToPan;
+    [SerializeField] private Transform targetEnemy;
+    [SerializeField] private float towerRange = 10f;
+    [SerializeField] private bool targetInRange = false;
+    private ParticleSystem cannon;
+    private Dictionary<Vector2Int, Waypoint2> gridSurroundingTower = new Dictionary<Vector2Int, Waypoint2>();
+    public Waypoint2 sebaWaypoint;
 
     private void Start()
     {
@@ -20,54 +22,50 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
-        if (targetLocked) { LookAtEnemy();}
+        LookAtEnemy();
+        if (targetInRange == true)       { Shooting(true); }
+                             else        { Shooting(false);
+                                           SearchForTarget(); }
     }
 
     void LookAtEnemy()
     {
-      objectToPan.LookAt(targetEnemy);
+        if(!targetEnemy) { return; }
+        objectToPan.LookAt(targetEnemy);
+        IsTargetInRange(targetEnemy);
     }
 
     void SearchForTarget()
     {
         var enemies = FindObjectsOfType<EnemyBehaviour>();
-        targetEnemy = enemies[0].transform.Find("Enemy_A").transform;
-        if (targetEnemy) { targetLocked = true; }
-        else { targetLocked = false; }
-    }
+        if (enemies.Length == 0) { return; }
 
-    private void OnTriggerEnter(Collider enemy)
-    {
-        LockOnTarget(enemy.gameObject);
-    }
+        Transform closestEnemy = enemies[0].transform.Find("Enemy_A").transform;
 
-    private void OnTriggerExit(Collider exitingEnemy)
-    {
-        if (exitingEnemy.transform == targetEnemy)
-            UnlockTarget();
-    }
-
-    private void OnTriggerStay(Collider enemy)
-    {
-        LockOnTarget(enemy.gameObject);
-    }
-
-    private void UnlockTarget()
-    {
-        Shooting(false);
-        targetEnemy = null;
-        targetLocked = false;
-    }
-
-    private void LockOnTarget(GameObject enemy)
-    {
-       if (!targetLocked)
+        foreach (EnemyBehaviour enemyToCheck in enemies)
         {
-            targetEnemy = enemy.transform;
-            targetLocked = true;
-            Shooting(true);
+            closestEnemy = GetClosest(closestEnemy, enemyToCheck.transform);
         }
+
+        targetEnemy = closestEnemy;
+        IsTargetInRange(targetEnemy);
     }
+
+    private void IsTargetInRange(Transform targetEnemy)
+    {
+        if (Vector3.Distance(gameObject.transform.position, targetEnemy.position) <= towerRange) { targetInRange = true; }
+        else { targetInRange = false; };
+    }
+
+    private Transform GetClosest(Transform transformA, Transform transformB)
+    {
+        var distToA = Vector3.Distance(gameObject.transform.position, transformA.position);
+        var distToB = Vector3.Distance(gameObject.transform.position, transformB.position);
+
+        if (distToA < distToB) { return transformA; }
+        else { return transformB; }
+    }
+
     private void Shooting(bool isShooting)
     {
         var cannonShooting = cannon.emission;

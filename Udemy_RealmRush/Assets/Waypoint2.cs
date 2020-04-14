@@ -6,6 +6,7 @@ public class Waypoint2 : MonoBehaviour
 {
     const int gridSize = 10;
     public bool isExplored = false;
+    public bool waypointWithObject = false;
     public Waypoint2 foundByWaypoint;
 
     // Start is called before the first frame update
@@ -26,5 +27,22 @@ public class Waypoint2 : MonoBehaviour
     {
         MeshRenderer topMR = transform.Find("root").Find("Top").GetComponent<MeshRenderer>();
         topMR.material.color = newColor;
+    }
+
+    //private void OnMouseOver()
+    //{
+    //    if (Input.GetMouseButtonDown(0) && waypointWithObject == false )
+    //    { var SpawnedObject = Instantiate(FindObjectOfType<GameControler>().GetObjectToSpawn(), gameObject.transform);
+    //        if (SpawnedObject) { waypointWithObject = true; }
+    //    }
+    //}
+
+    private void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(0) && waypointWithObject == false)
+        {
+            FindObjectOfType<GameControler>().ManageTowers(this);
+            //if (SpawnedObject) { waypointWithObject = true; }
+        }
     }
 }

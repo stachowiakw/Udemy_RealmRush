@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,29 +7,45 @@ public class GameControler : MonoBehaviour
 {
     [SerializeField] public Waypoint2 StartWaypoint, EndWaypoint;
     [SerializeField] public Color ColorStart, ColorEnd, ColorExploration, ColorPath;
-
+    [SerializeField] private GameObject objectToSpawn;
     public List<GameObject> enemies = new List<GameObject>();
-    [SerializeField]
-    private GameObject EnemyType1;
-    private Pathfinder pathfinder;
+    Queue<GameObject> towerQueue = new Queue<GameObject>();
+    [SerializeField] int towersLimit = 3;
 
-    // Start is called before the first frame update
-    void Start()
+    public GameObject GetObjectToSpawn() { return objectToSpawn; }
+
+
+    public void ManageTowers(Waypoint2 baseWaypoint)
     {
-        pathfinder = FindObjectOfType<Pathfinder>();
-        SpawnEnemy();
+        print("########################"+towerQueue.Count);
+        if (FindObjectsOfType<Tower>().Length >= towersLimit)
+        {
+            MoveTower(baseWaypoint);
+        }
+        else
+        {
+            InstantiateTower(baseWaypoint);
+        }
+        print("########################" + towerQueue.Count);
     }
 
-    private void Update()
+    private void InstantiateTower(Waypoint2 baseWaypoint)
     {
-        if (Input.GetKeyDown(KeyCode.Space)) { SpawnEnemy(); }
+        var newTower = Instantiate(objectToSpawn, baseWaypoint.transform.position, Quaternion.identity);
+        newTower.GetComponent<Tower>().sebaWaypoint = baseWaypoint;
+        towerQueue.Enqueue(newTower);
+        baseWaypoint.waypointWithObject = true;
     }
 
-    void SpawnEnemy()
+    private void MoveTower(Waypoint2 baseWaypoint)
     {
-        Vector3 SpawnPoint = new Vector3();
-        SpawnPoint = StartWaypoint.transform.position;
-        var SpawnedEnemy = Instantiate(EnemyType1, SpawnPoint, Quaternion.identity);
-        enemies.Add(SpawnedEnemy);
+        var oldTower = towerQueue.Dequeue();
+        oldTower.GetComponent<Tower>().sebaWaypoint.waypointWithObject = false;
+        oldTower.GetComponent<Tower>().sebaWaypoint = baseWaypoint;
+        oldTower.GetComponent<Tower>().sebaWaypoint.waypointWithObject = true;
+        oldTower.transform.position = baseWaypoint.transform.position;
+        towerQueue.Enqueue(oldTower);
     }
 }
+
+

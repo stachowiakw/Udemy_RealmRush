@@ -65,6 +65,7 @@
     <Compile Include="Assets\CubeEditor.cs" />
     <Compile Include="Assets\EnemyBehaviour.cs" />
     <Compile Include="Assets\EnemyMovement.cs" />
+    <Compile Include="Assets\EnemySpawner.cs" />
     <Compile Include="Assets\GameControler.cs" />
     <Compile Include="Assets\Pathfinder.cs" />
     <Compile Include="Assets\Tower.cs" />

@@ -85,7 +85,7 @@ public class Pathfinder : MonoBehaviour
 
     private void AddWaypointsToThePath()
     {
-        Path.Add(gameControler.EndWaypoint);
+        SetAsPath(gameControler.EndWaypoint);
         Waypoint2 WaypointToAdd = gameControler.EndWaypoint.foundByWaypoint;
         while (WaypointToAdd != gameControler.StartWaypoint)
         {
@@ -93,9 +93,14 @@ public class Pathfinder : MonoBehaviour
             WaypointToAdd.SetTopColor(gameControler.ColorPath);
             WaypointToAdd = WaypointToAdd.foundByWaypoint;
         }
-        Path.Add(gameControler.StartWaypoint);
+        SetAsPath(gameControler.StartWaypoint);
         Path.Reverse();
         pathReady = true;
+    }
+
+    private void SetAsPath(Waypoint2 waypoint)
+    {
+        Path.Add(waypoint);
     }
 
     public List<Waypoint2> GetPath() { return Path; }
