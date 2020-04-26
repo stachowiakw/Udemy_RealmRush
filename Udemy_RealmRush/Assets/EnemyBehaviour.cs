@@ -8,6 +8,8 @@ public class EnemyBehaviour : MonoBehaviour
     GameControler gameControler;
     [SerializeField] int Health = 100;
     [SerializeField] int damageByTower = 1;
+    [SerializeField] GameObject ParticleObjectToSpawnOnDeath;
+    [SerializeField] GameObject ParticleObjectToSpawnOnSelfDestruct;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,16 @@ public class EnemyBehaviour : MonoBehaviour
     private void DestroyEnemy()
     {
         gameControler.enemies.Remove(gameObject);
+        var DestroyParticleSystem = Instantiate(ParticleObjectToSpawnOnDeath, GameObject.Find("Enemy_A").transform.position, Quaternion.identity);
         Destroy(gameObject);
+        Destroy(DestroyParticleSystem, DestroyParticleSystem.GetComponent<ParticleSystem>().main.duration);
+    }
+
+    public void SelfDestuct()
+    {
+        gameControler.enemies.Remove(gameObject);
+        var DestroyParticleSystem = Instantiate(ParticleObjectToSpawnOnSelfDestruct, GameObject.Find("Enemy_A").transform.position, Quaternion.identity);
+        Destroy(gameObject);
+        Destroy(DestroyParticleSystem, DestroyParticleSystem.GetComponent<ParticleSystem>().main.duration);
     }
 }
